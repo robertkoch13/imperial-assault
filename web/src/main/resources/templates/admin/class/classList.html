@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="main/list" th:with="page='classes', category='admin'">
+<head>
+    <title>Classes</title>
+</head>
+<body>
+<div layout:fragment="table">
+    <table class="table">
+        <tr>
+            <th><a th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${'className'})}">Class Name</a></th>
+            <th><a th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${'expansionName'})}">From Expansion</a></th>
+            <th><a th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${'classType'})}">Class Type</a></th>
+        </tr>
+        <th:block th:each="playerClass : ${collection}">
+            <tr>
+                <td><a th:href="@{/admin/classes/edit(name=${playerClass.className})}" th:text="${playerClass.className}"></a></td>
+                <td th:text="${playerClass.expansionName}"></td>
+                <td th:text="${playerClass.classType}"></td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+<div layout:fragment="tablebuttons">
+    <div class="btn-group" role="group" aria-label="...">
+        <a href="/admin/classes/add" class="btn btn-large btn-default" role="button">Add a Class</a>
+    </div>
+</div>
+</body>
+</html>

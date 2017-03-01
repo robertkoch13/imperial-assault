@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="main/list" th:with="page='missions', category='admin'">
+<head>
+    <title>Missions</title>
+</head>
+<body>
+<div layout:fragment="table">
+    <table class="table">
+        <tr>
+            <th><a th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${'missionName'})}">Mission Name</a></th>
+            <th><a th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${'missionType'})}">Mission Type</a></th>
+            <th><a th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${'expansionName'})}">From Expansion</a></th>
+        </tr>
+        <th:block th:each="mission : ${collection}">
+            <tr>
+                <td><a th:href="@{/admin/missions/edit(name=${mission.missionName})}" th:text="${mission.missionName}"></a></td>
+                <td th:text="${mission.missionType}"></td>
+                <td th:text="${mission.expansionName}"></td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+<div layout:fragment="tablebuttons">
+    <div class="btn-group" role="group" aria-label="...">
+        <a href="/admin/missions/add" class="btn btn-large btn-default" role="button">Add a Mission</a>
+    </div>
+</div>
+</body>
+</html>

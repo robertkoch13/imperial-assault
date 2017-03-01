@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:fragment="scripts">
+</th:block>
+
+ <div th:fragment="playerView">
+     <div style="margin-bottom: 15px" class="input-group input-group-sm">
+         <span class="input-group-addon" id="sizing-addon1">Name:</span>
+         <input type="text" class="form-control" placeholder="name" id="name" th:field="*{name}" aria-describedby="sizing-addon1">
+     </div>
+     <div style="margin-bottom: 15px" class="input-group input-group-sm">
+         <span class="input-group-addon" id="sizing-addon2">Type:</span>
+         <select class="form-control" id="playerType" th:field="*{playerType}" aria-describedby="sizing-addon2">
+             <option th:each="playerType : ${allPlayerTypes}"
+                     th:value="${playerType.playerType}"
+                     th:text="${playerType.playerType}">Wireframe</option>
+         </select>
+     </div>
+     <div style="margin-bottom: 15px" class="input-group input-group-sm">
+         <span class="input-group-addon" id="sizing-addon3">Class:</span>
+         <select class="form-control" id="playerClass" th:field="*{playerClass}" aria-describedby="sizing-addon3">
+             <option th:each="playerClass : ${allPlayerClasses}"
+                     th:value="${playerClass.className}"
+                     th:text="${playerClass.className}">Wireframe</option>
+         </select>
+     </div>
+
+ </div>
+ <div th:fragment="imageView">
+ </div>
+</html>

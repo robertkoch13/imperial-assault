@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="main/dashboard">
+<head>
+    <title>Add/Edit</title>
+</head>
+<body>
+
+    <th:block layout:fragment="dashboardscripts">
+        <th:block layout:fragment="addeditscripts">
+        </th:block>
+    </th:block>
+
+    <div layout:fragment="dashboardcontent">
+        <div class="col-md-4 centered">
+            <div layout:fragment="left"></div>
+        </div>
+        <div class="col-md-4">
+            <div layout:fragment="middle"></div>
+        </div>
+        <div class="col-md-4">
+            <div layout:fragment="right"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>

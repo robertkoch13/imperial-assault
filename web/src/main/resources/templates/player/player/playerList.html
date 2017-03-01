@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div th:fragment="scripts">
+    <script>
+        function addPlayer() {
+            $('#ModalAddPlayer').modal('hide');
+            var url = "";
+            $("#playerList").load(url);
+        }
+    </script>
+</div>
+
+<div th:fragment="campaignPlayerListPanel">
+    <div class="panel panel-primary">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title pull-left">Player List</h3>
+            <div class="btn-group pull-right" role="group" aria-label="...">
+                <a class="btn btn-success btn-xs" role="button" data-toggle="modal" data-target="#ModalAddPlayer"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+            </div>
+        </div>
+        <div class="panel-body" style="overflow-x:scroll">
+            <div id="playerList" th:replace="player/player/playerList :: campaignPlayerList"></div>
+        </div>
+    </div>
+    <div th:replace="player/player/playerList :: addCampaignPlayer"></div>
+</div>
+
+<div th:fragment="campaignPlayerList">
+    <table class="table">
+        <tr>
+            <td>Name</td>
+            <td>Player Type</td>
+            <td>Player Class</td>
+            <td>Available XP</td>
+        </tr>
+        <th:block th:each="player : ${campaignPlayers}">
+            <tr>
+                <td th:text="${player.name}"></td>
+                <td th:text="${player.playerType}"></td>
+                <td th:text="${player.playerClass}"></td>
+                <td th:text="${player.XP}"></td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+
+<div th:fragment="addCampaignPlayer">
+    <div id="ModalAddPlayer" class="modal fade">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title">Add Player</h3>
+                </div>
+                <div class="modal-body">
+                    <form th:object="${newPlayer}">
+                        <div th:replace="player/player/playerView :: playerView"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addPlayer()">Add Player</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

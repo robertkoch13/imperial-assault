@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+ <div th:fragment="campaignView">
+     <div style="margin-bottom: 15px" class="input-group input-group-sm">
+         <span class="input-group-addon" id="sizing-addon1">Name:</span>
+         <input type="text" class="form-control" placeholder="campaign name" id="campaignName" th:field="*{campaignName}" aria-describedby="sizing-addon1">
+     </div>
+     <div style="margin-bottom: 15px" class="input-group input-group-sm">
+         <span class="input-group-addon" id="sizing-addon2">From:</span>
+         <select class="form-control" id="expansionName" th:field="*{expansionName}" aria-describedby="sizing-addon2">
+             <option th:each="expansion : ${allExpansions}"
+                     th:value="${expansion.expansionName}"
+                     th:text="${expansion.expansionName}">Wireframe</option>
+         </select>
+     </div>
+     <div style="margin-bottom: 15px" class="input-group input-group-sm">
+         <span class="input-group-addon" id="sizing-addon3">Image:</span>
+         <input type="text" class="form-control" placeholder="image url" id="imageURL" th:field="*{imageURL}" aria-describedby="sizing-addon3">
+     </div>
+ </div>
+ <div th:fragment="imageView">
+     <div class="panel panel-primary">
+         <div class="panel-heading">
+             <h3 class="panel-title">Image</h3>
+         </div>
+         <div class="panel-body">
+             <img th:src="${campaign.imageURL}" class="img-rounded img-responsive" alt="Component Image" height="140">
+         </div>
+     </div>
+ </div>
+
+</html>

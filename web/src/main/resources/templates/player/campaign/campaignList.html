@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="main/list" th:with="page='player', category='player'">
+<head>
+    <title>Campaigns</title>
+</head>
+<body>
+<div layout:fragment="table">
+    <table class="table">
+        <tr>
+            <th><a th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${'name'})}">Name</a></th>
+            <th><a th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${'campaign'})}">Campaign</a></th>
+            <th><a th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${'dateStarted'})}">Date Started</a></th>
+            <th><a th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${'dateCompleted'})}">Date Ended</a></th>
+            <th><a th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${'complete'})}">Is Complete</a></th>
+        </tr>
+        <th:block th:each="campaign : ${collection}">
+            <tr>
+                <td><a th:href="@{/}+${campaign.name}" th:text="${campaign.name}"></a></td>
+                <td th:text="${campaign.campaign}"></td>
+                <td th:text="${campaign.dateStarted}"></td>
+                <td th:text="${campaign.dateCompleted}"></td>
+                <td><span class="glyphicon glyphicon-ok" th:classappend="${campaign.complete ? '' : 'hidden'}" aria-hidden="true"></span></td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+<div layout:fragment="tablebuttons">
+    <div class="btn-group" role="group" aria-label="...">
+        <a href="/campaigns/add" class="btn btn-large btn-default" role="button">Add a Campaign</a>
+    </div>
+</div>
+</body>
+</html>

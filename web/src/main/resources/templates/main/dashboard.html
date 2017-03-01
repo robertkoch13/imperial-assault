@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="main/default">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+    <th:block layout:fragment="scripts">
+        <th:block layout:fragment="dashboardscripts">
+        </th:block>
+    </th:block>
+
+    <div layout:fragment="content">
+        <div th:replace="main/navbar :: navbar"></div>
+        <div layout:fragment="dashboardcontent"></div>
+    </div>
+
+</body>
+</html>

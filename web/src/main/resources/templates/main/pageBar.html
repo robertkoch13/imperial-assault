@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div th:fragment='paginationScript'>
+    <script th:src="@{/static/js/paging.js}"></script>
+</div>
+
+<!-- Pagination Bar -->
+<div th:fragment='paginationbar'>
+    <div class="row">
+        <div class="form-group col-md-2">
+            <select class="form-control pagination" id="pageSizeSelect">
+                <option th:each="pageSize : ${pageSizes}" th:text="${pageSize}" th:value="${pageSize}" th:selected="${pageSize} == ${selectedPageSize}"></option>
+            </select>
+        </div>
+        <div th:if="${collection.getTotalPages() > 1}" class="form-group col-md-10 pagination-centered">
+            <ul class="pagination">
+                <li th:class="${collection.getNumber() == 0} ? disabled"><a class="pageLink" th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${selectedSort})}">&laquo;</a></li>
+                <li th:class="${collection.getNumber() == 0} ? disabled"><a class="pageLink" th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=${collection.getNumber()}, sort=${selectedSort})}">&larr;</a></li>
+                <li th:class="${collection.getNumber() == (page - 1)} ? 'active pointer-disabled'"
+                    th:each="page : ${#numbers.sequence(pager.getStartPage(), pager.getEndPage())}"><a class="pageLink" th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=${page}, sort=${selectedSort})}" th:text="${page}"></a></li>
+                <li th:class="${collection.getNumber() + 1 == collection.getTotalPages()} ? disabled"><a class="pageLink" th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=${collection.getNumber() + 2}, sort=${selectedSort})}">&rarr;</a></li>
+                <li th:class="${collection.getNumber() + 1 == collection.getTotalPages()} ? disabled"><a class="pageLink" th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize},page=${collection.getTotalPages()}, sort=${selectedSort})}">&raquo;</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</html>

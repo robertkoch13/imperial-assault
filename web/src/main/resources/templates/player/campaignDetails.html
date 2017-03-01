@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="main/addedit" th:with="page='player', category='player'">
+<head>
+    <title>View Campaign</title>
+</head>
+<body>
+
+    <th:block layout:fragment="addeditscripts">
+        <div th:replace="player/campaign/campaignView :: scripts"></div>
+        <div th:replace="player/player/playerList :: scripts"></div>
+    </th:block>
+
+    <div layout:fragment="left">
+        <form action="#" th:action="@{/campaigns/edit}" th:object="${campaign}" method="post">
+            <div class="panel panel-primary">
+                <div class="panel-heading clearfix">
+                    <h3 class="panel-title pull-left">Campaign Details</h3>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-xs pull-right"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div th:replace="player/campaign/campaignView :: campaignView"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div layout:fragment="middle">
+        <div th:replace="player/player/playerList :: campaignPlayerListPanel"></div>
+    </div>
+    <div layout:fragment="right">
+    </div>
+</body>
+</html>

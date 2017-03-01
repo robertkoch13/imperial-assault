@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:fragment="scripts">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css"/>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var date_input=$('input[id*="date"]'); //our date input has the name "date"
+            var options={
+                format: 'yyyy/mm/dd',
+                autoclose: true,
+                orientation: "bottom auto",
+                startView: 0
+            };
+            date_input.datepicker(options);
+        })
+    </script>
+</th:block>
+
+ <div th:fragment="campaignView">
+     <div style="margin-bottom: 15px" class="input-group input-group-sm">
+         <span class="input-group-addon" id="sizing-addon1">Name:</span>
+         <input type="text" class="form-control" placeholder="name" id="name" th:field="*{name}" aria-describedby="sizing-addon1">
+     </div>
+     <div style="margin-bottom: 15px" class="input-group input-group-sm">
+         <span class="input-group-addon" id="sizing-addon2">Campaign:</span>
+         <select class="form-control" id="campaignName" th:field="*{campaign}" aria-describedby="sizing-addon2">
+             <option th:each="campaign : ${allCampaigns}"
+                     th:value="${campaign.campaignName}"
+                     th:text="${campaign.campaignName}">Wireframe</option>
+         </select>
+     </div>
+     <div style="margin-bottom: 15px" class="input-group input-group-sm">
+         <span class="input-group-addon" id="sizing-addon3">Started:</span>
+         <input type="text" class="form-control" placeholder="YYYY/MM/DD" id="dateStarted" th:field="*{dateStarted}" aria-describedby="sizing-addon3">
+     </div>
+     <div style="margin-bottom: 15px" class="input-group input-group-sm">
+         <span class="input-group-addon" id="sizing-addon4">Completed:</span>
+         <input type="text" class="form-control" placeholder="YYYY/MM/DD" id="dateCompleted" th:field="*{dateCompleted}" aria-describedby="sizing-addon4">
+     </div>
+
+ </div>
+ <div th:fragment="imageView">
+ </div>
+</html>

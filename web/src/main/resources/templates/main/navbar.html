@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<!-- Navbar -->
+<nav class="navbar navbar-inverse navbar-fixed-top" th:fragment="navbar">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">IA Campaign Log</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li th:classappend="${category == 'player' ? 'active' : ''}">
+                    <a href="#" th:href="@{/campaigns/list}">Campaigns</a>
+                </li>
+                <li class="dropdown" th:classappend="${category == 'admin' ? 'active' : ''}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li th:classappend="${page == 'expansions' ? 'active' : ''}"><a href="#" th:href="@{/admin/expansions/list}">Expansions</a></li>
+                        <li th:classappend="${page == 'campaigns' ? 'active' : ''}"><a href="#" th:href="@{/admin/campaigns/list}">Campaigns</a></li>
+                        <li th:classappend="${page == 'missions' ? 'active' : ''}"><a href="#" th:href="@{/admin/missions/list}">Missions</a></li>
+                        <li th:classappend="${page == 'classes' ? 'active' : ''}"><a href="#" th:href="@{/admin/classes/list}">Classes</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/logout" th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+</html>

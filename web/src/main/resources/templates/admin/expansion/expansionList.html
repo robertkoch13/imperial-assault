@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="main/list" th:with="page='expansions', category='admin'">
+<head>
+    <title>Expansions</title>
+</head>
+<body>
+<div layout:fragment="table">
+    <table class="table">
+        <tr>
+            <th><a th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${'expansionName'})}">Expansion Name</a></th>
+            <th><a th:href="@{${#httpServletRequest.requestURI}(pageSize=${selectedPageSize}, page=1, sort=${'expansionType'})}">Expansion Type</a></th>
+        </tr>
+        <th:block th:each="expansion : ${collection}">
+            <tr>
+                <td><a th:href="@{/admin/expansions/edit(name=${expansion.expansionName})}" th:text="${expansion.expansionName}"></a></td>
+                <td th:text="${expansion.expansionType}"></td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+<div layout:fragment="tablebuttons">
+    <div class="btn-group" role="group" aria-label="...">
+        <a href="/admin/expansions/add" class="btn btn-large btn-default" role="button">Add an Expansion</a>
+    </div>
+</div>
+</body>
+</html>
