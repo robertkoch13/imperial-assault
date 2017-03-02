@@ -3,33 +3,53 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<div th:fragment="scripts">
+<th:block th:fragment="scripts">
     <script>
-        function addPlayer() {
-            $('#ModalAddPlayer').modal('hide');
-            var url = "";
-            $("#playerList").load(url);
-        }
+        $(document).submit(function(e){
+            var form = $(e.target);
+            if(form.data("custom-form") == "yes") {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: form.attr("action"),
+                    data: form.serialize(), // serializes the form's elements.
+                    success: function (data) {
+                        $(form.data("results-to")).html(data);
+                    }
+                });
+                $(form.data("modal-to-dismiss")).modal('hide');
+            }
+        });
     </script>
-</div>
+    <th:block th:replace="player/player/playerView :: scripts"></th:block>
+</th:block>
 
 <div th:fragment="campaignPlayerListPanel">
     <div class="panel panel-primary">
         <div class="panel-heading clearfix">
             <h3 class="panel-title pull-left">Player List</h3>
             <div class="btn-group pull-right" role="group" aria-label="...">
-                <a class="btn btn-success btn-xs" role="button" data-toggle="modal" data-target="#ModalAddPlayer"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+                <div class="dropdown">
+                    <button class="btn btn-success btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a role="button" data-toggle="modal" data-target="#ModalAddPlayer">Add Player</a></li>
+                        <li><a role="button" data-toggle="modal" data-target="#ModalAddPlayerXP">Add XP</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="panel-body" style="overflow-x:scroll">
-            <div id="playerList" th:replace="player/player/playerList :: campaignPlayerList"></div>
+            <div th:replace="player/player/playerList :: campaignPlayerList"></div>
         </div>
     </div>
     <div th:replace="player/player/playerList :: addCampaignPlayer"></div>
+    <div th:replace="player/player/playerList :: addCampaignPlayerXP"></div>
 </div>
 
-<div th:fragment="campaignPlayerList">
-    <table class="table">
+<div id="playerList" th:fragment="campaignPlayerList">
+    <table class="table table-fixed">
         <tr>
             <td>Name</td>
             <td>Player Type</td>
@@ -48,25 +68,48 @@
 </div>
 
 <div th:fragment="addCampaignPlayer">
-    <div id="ModalAddPlayer" class="modal fade">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title">Add Player</h3>
-                </div>
-                <div class="modal-body">
-                    <form th:object="${newPlayer}">
+    <form action="#" data-custom-form="yes" data-results-to="#playerList" data-modal-to-dismiss="#ModalAddPlayer" th:object="${newPlayer}" th:action="${campaignURL}+@{/players/add}" th:method="post">
+        <div id="ModalAddPlayer" class="modal fade">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title">Add Player</h3>
+                    </div>
+                    <div class="modal-body">
                         <div th:replace="player/player/playerView :: playerView"></div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="addPlayer()">Add Player</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Player</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
+
+<div th:fragment="addCampaignPlayerXP">
+    <form action="#" data-custom-form="yes" data-results-to="#playerList" data-modal-to-dismiss="#ModalAddPlayerXP" th:object="${addXP}" th:action="${campaignURL}+@{/players/addXP}" th:method="post">
+        <div id="ModalAddPlayerXP" class="modal fade">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title">Add Player XP</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div th:replace="player/player/addPlayerXPView :: addPlayerXPView"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Player XP</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 
 </html>

@@ -3,6 +3,19 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:fragment="scripts">
+    <script>
+        $(document).ready(function () {
+            $("#playerType").change(function () {
+                if ($(this).data('options') == undefined) {
+                    /*Taking an array of all options-2 and kind of embedding it on the select1*/
+                    $(this).data('options', $('#playerClass option').clone());
+                }
+                var id = $(this).val();
+                var options = $(this).data('options').filter('[data-classtype="' + id + '"]');
+                $('#playerClass').html(options);
+            });
+        });
+    </script>
 </th:block>
 
  <div th:fragment="playerView">
@@ -12,7 +25,8 @@
      </div>
      <div style="margin-bottom: 15px" class="input-group input-group-sm">
          <span class="input-group-addon" id="sizing-addon2">Type:</span>
-         <select class="form-control" id="playerType" th:field="*{playerType}" aria-describedby="sizing-addon2">
+         <select class="form-control" id="playerType" name="playerType" th:field="*{playerType}" aria-describedby="sizing-addon2">
+             <option value="default">Please select a type</option>
              <option th:each="playerType : ${allPlayerTypes}"
                      th:value="${playerType.playerType}"
                      th:text="${playerType.playerType}">Wireframe</option>
@@ -20,8 +34,10 @@
      </div>
      <div style="margin-bottom: 15px" class="input-group input-group-sm">
          <span class="input-group-addon" id="sizing-addon3">Class:</span>
-         <select class="form-control" id="playerClass" th:field="*{playerClass}" aria-describedby="sizing-addon3">
+         <select class="form-control" id="playerClass" name="playerClass" th:field="*{playerClass}" aria-describedby="sizing-addon3">
+             <option value="default">Please select a class</option>
              <option th:each="playerClass : ${allPlayerClasses}"
+                     th:attr="data-classtype=${playerClass.classType}"
                      th:value="${playerClass.className}"
                      th:text="${playerClass.className}">Wireframe</option>
          </select>

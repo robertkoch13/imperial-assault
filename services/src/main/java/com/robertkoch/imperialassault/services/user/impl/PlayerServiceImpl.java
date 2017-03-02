@@ -1,5 +1,6 @@
 package com.robertkoch.imperialassault.services.user.impl;
 
+import com.robertkoch.imperialassault.domain.admin.PlayerClass;
 import com.robertkoch.imperialassault.domain.enums.PlayerType;
 import com.robertkoch.imperialassault.domain.user.UserCampaign;
 import com.robertkoch.imperialassault.domain.user.UserPlayer;
@@ -44,8 +45,9 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     @Transactional
-    public PlayerCampaignModel updatePlayerCampaign(String username, PlayerCampaignModel playerCampaignModel) {
-        UserCampaign userCampaign = userCampaignRepository.findByUsernameAndName(username, playerCampaignModel.getName());
+    public PlayerCampaignModel updatePlayerCampaign(String username, String campaignName, PlayerCampaignModel playerCampaignModel) {
+        UserCampaign userCampaign = userCampaignRepository.findByUsernameAndName(username, campaignName);
+        userCampaign.setName(playerCampaignModel.getName());
         userCampaign.setDateStarted(playerCampaignModel.getDateStarted());
         userCampaign.setDateEnded(playerCampaignModel.getDateCompleted());
         userCampaign.setCredits(playerCampaignModel.getCredits());
@@ -136,5 +138,13 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public PlayerModel getNewPlayerModel() {
         return new PlayerModel();
+    }
+
+    @Override
+    public void addXP(String username, String campaignName, PlayerType playerType, short increaseXPBy) {
+        for(UserPlayer userPlayer : userPlayerRepository.findByUserCampaignUsernameAndUserCampaignNameAndPlayerType(username, campaignName, playerType)) {
+            userPlayer.setXP((short)(userPlayer.getXP() + increaseXPBy));
+            userPlayerRepository.save(userPlayer);
+        }
     }
 }

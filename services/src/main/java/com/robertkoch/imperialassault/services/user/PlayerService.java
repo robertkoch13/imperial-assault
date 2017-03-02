@@ -14,7 +14,7 @@ import java.util.List;
 public interface PlayerService {
     PlayerCampaignModel addPlayerCampaign(String username, String campaign, String name);
     PlayerCampaignModel addPlayerCampaign(String username, PlayerCampaignModel playerCampaignModel);
-    PlayerCampaignModel updatePlayerCampaign(String username, PlayerCampaignModel playerCampaignModel);
+    PlayerCampaignModel updatePlayerCampaign(String username, String campaign, PlayerCampaignModel playerCampaignModel);
     Page<PlayerCampaignModel> allPlayerCampaigns(String username, Pageable pageable);
     List<PlayerCampaignModel> allPlayerCampaigns(String username);
     PlayerCampaignModel findPlayerCampaignByName(String username, String name);
@@ -26,4 +26,5 @@ public interface PlayerService {
     List<PlayerModel> allPlayers(String username, String campaignName);
     PlayerModel findPlayerByName(String username, String campaignName, String name);
     PlayerModel getNewPlayerModel();
+    void addXP(String username, String campaignName, PlayerType playerType, short increaseXPBy);
 }

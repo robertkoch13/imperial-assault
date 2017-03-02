@@ -9,12 +9,12 @@
 <body>
 
     <th:block layout:fragment="addeditscripts">
-        <div th:replace="player/campaign/campaignView :: scripts"></div>
-        <div th:replace="player/player/playerList :: scripts"></div>
+        <th:block th:replace="player/campaign/campaignView :: scripts"></th:block>
+        <th:block th:replace="player/player/playerList :: scripts"></th:block>
     </th:block>
 
     <div layout:fragment="left">
-        <form action="#" th:action="@{/campaigns/edit}" th:object="${campaign}" method="post">
+        <form action="#" th:action="${campaignURL}+@{/edit}" th:object="${campaign}" method="post">
             <div class="panel panel-primary">
                 <div class="panel-heading clearfix">
                     <h3 class="panel-title pull-left">Campaign Details</h3>

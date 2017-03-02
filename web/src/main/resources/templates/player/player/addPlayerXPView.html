@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:fragment="scripts">
+</th:block>
+
+<div th:fragment="addPlayerXPView">
+    <div style="margin-bottom: 15px" class="input-group input-group-sm">
+        <span class="input-group-addon" id="sizing-addon1">Type:</span>
+        <select class="form-control" id="addXPPlayerType" th:field="*{playerType}" aria-describedby="sizing-addon1">
+            <option th:each="playerType : ${allPlayerTypes}"
+                th:value="${playerType.playerType}"
+                th:text="${playerType.playerType}">Wireframe</option>
+        </select>
+    </div>
+    <div style="margin-bottom: 15px" class="input-group input-group-sm">
+        <span class="input-group-addon" id="sizing-addon2">Increasy by:</span>
+        <input type="text" class="form-control" placeholder="increase by" id="increaseXPBy" th:field="*{increaseXPBy}" aria-describedby="sizing-addon2">
+    </div>
+</div>
+</html>
