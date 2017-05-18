@@ -68,4 +68,11 @@ public class PlayerClassModel {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
+    @Override
+    public String toString() {
+        return className + " (" +
+                expansionName + ")";
+    }
+
 }

@@ -68,4 +68,10 @@ public class MissionModel {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
+    @Override
+    public String toString() {
+        return missionName + " (" +
+                expansionName + ")";
+    }
 }

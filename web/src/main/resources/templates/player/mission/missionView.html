@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:fragment="scripts">
+    <script>
+        $(document).ready(function () {
+            $("#missionType").change(function () {
+                if ($(this).data('options') == undefined) {
+                    /*Taking an array of all options-2 and kind of embedding it on the select1*/
+                    $(this).data('options', $('#missionName option').clone());
+                }
+                var id = $(this).val();
+                var options = $(this).data('options').filter('[data-missiontype="' + id + '"]');
+                $('#missionName').html(options);
+            });
+        });
+    </script>
+</th:block>
+
+ <div th:fragment="missionView">
+     <div style="margin-bottom: 15px" class="input-group input-group-sm">
+         <span class="input-group-addon" id="sizing-addon2">Type:</span>
+         <select class="form-control" id="missionType" name="missionType" th:field="*{missionType}" aria-describedby="sizing-addon2">
+             <option value="default">Please select a type</option>
+             <option th:each="missionType : ${allMissionTypes}"
+                     th:value="${missionType.missionType}"
+                     th:text="${missionType.missionType}">Wireframe</option>
+         </select>
+     </div>
+     <div style="margin-bottom: 15px" class="input-group input-group-sm">
+         <span class="input-group-addon" id="sizing-addon3">Mission:</span>
+         <select class="form-control" id="missionName" name="missionName" th:field="*{name}" aria-describedby="sizing-addon3">
+             <option value="default">Please select a mission</option>
+             <option th:each="mission : ${allMissions}"
+                     th:attr="data-missiontype=${mission.missionType}"
+                     th:value="${mission.missionName}"
+                     th:text="${mission}">Wireframe</option>
+         </select>
+     </div>
+
+ </div>
+</html>

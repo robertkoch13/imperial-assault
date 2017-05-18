@@ -2,36 +2,52 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="main/addedit" th:with="page='player', category='player'">
+      layout:decorator="main/dashboard" th:with="page='player', category='player'">
 <head>
     <title>View Campaign</title>
 </head>
 <body>
 
-    <th:block layout:fragment="addeditscripts">
+    <th:block layout:fragment="dashboardscripts">
         <th:block th:replace="player/campaign/campaignView :: scripts"></th:block>
         <th:block th:replace="player/player/playerList :: scripts"></th:block>
+        <th:block th:replace="player/mission/missionList :: scripts"></th:block>
     </th:block>
 
-    <div layout:fragment="left">
-        <form action="#" th:action="${campaignURL}+@{/edit}" th:object="${campaign}" method="post">
-            <div class="panel panel-primary">
-                <div class="panel-heading clearfix">
-                    <h3 class="panel-title pull-left">Campaign Details</h3>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-xs pull-right"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+    <th:block layout:fragment="dashboardcontent">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-pills" role="tablist">
+            <li role="presentation" class="active"><a href="#main" aria-controls="main" role="tab" data-toggle="tab">Main</a></li>
+            <li role="presentation"><a href="#players" aria-controls="players" role="tab" data-toggle="tab">Players</a></li>
+            <li role="presentation"><a href="#missions" aria-controls="missions" role="tab" data-toggle="tab">Missions</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="main">
+                <form action="#" th:action="${campaignURL}+@{/edit}" th:object="${campaign}" method="post">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading clearfix">
+                            <h3 class="panel-title pull-left">Campaign Details</h3>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-xs pull-right"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div th:replace="player/campaign/campaignView :: campaignView"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="panel-body">
-                    <div th:replace="player/campaign/campaignView :: campaignView"></div>
-                </div>
+                </form>
             </div>
-        </form>
-    </div>
-    <div layout:fragment="middle">
-        <div th:replace="player/player/playerList :: campaignPlayerListPanel"></div>
-    </div>
-    <div layout:fragment="right">
-    </div>
+            <div role="tabpanel" class="tab-pane fade" id="players">
+                <div th:replace="player/player/playerList :: campaignPlayerListPanel"></div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="missions">
+                <div th:replace="player/mission/missionList :: campaignMissionListPanel"></div>
+            </div>
+        </div>
+
+    </th:block>
 </body>
 </html>

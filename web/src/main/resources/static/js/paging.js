@@ -11,3 +11,4 @@ function changePageAndSize() {
 		window.location.replace(window.location.pathname + "?pageSize=" + this.value + "&page=1");
 	});
 }
+

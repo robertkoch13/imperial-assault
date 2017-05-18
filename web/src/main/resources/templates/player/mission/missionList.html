@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block th:fragment="scripts">
+    <th:block th:replace="player/mission/missionView :: scripts"></th:block>
+</th:block>
+
+<div th:fragment="campaignMissionListPanel">
+    <div class="panel panel-primary">
+        <div class="panel-heading clearfix">
+            <h3 class="panel-title pull-left">Mission List</h3>
+            <div class="btn-group pull-right" role="group" aria-label="...">
+                <div class="dropdown">
+                    <button class="btn btn-success btn-xs dropdown-toggle" type="button" id="dropdownMissions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMissions">
+                        <li><a role="button" data-toggle="modal" data-target="#ModalAddMission">Add Mission</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div th:replace="player/mission/missionList :: campaignMissionList"></div>
+    </div>
+    <div th:replace="player/mission/missionList :: addCampaignMission"></div>
+</div>
+
+<div id="missionList" class="table-responsive" th:fragment="campaignMissionList">
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Victory Type</th>
+                <th>Completed on</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="mission : ${campaignMissions}">
+                <tr>
+                    <td th:text="${mission.name}"></td>
+                    <td th:text="${mission.type}"></td>
+                    <td th:text="${mission.missionStatus}"></td>
+                    <td th:text="${mission.victoryType}"></td>
+                    <td th:text="${mission.dateCompleted}"></td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+</div>
+
+<div th:fragment="addCampaignMission">
+    <form action="#" data-custom-form="yes" data-results-to="#missionList" data-modal-to-dismiss="#ModalAddMission" th:object="${newMission}" th:action="${campaignURL}+@{/missions/add}" th:method="post">
+        <div id="ModalAddMission" class="modal fade">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title">Add Mission</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div th:replace="player/mission/missionView :: missionView"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Mission</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+</html>

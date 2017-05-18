@@ -1,11 +1,9 @@
 package com.robertkoch.imperialassault.web.controllers;
 
+import com.robertkoch.imperialassault.domain.enums.MissionType;
 import com.robertkoch.imperialassault.domain.enums.PlayerType;
 import com.robertkoch.imperialassault.services.admin.ConfigureService;
-import com.robertkoch.imperialassault.services.models.CampaignModel;
-import com.robertkoch.imperialassault.services.models.PlayerCampaignModel;
-import com.robertkoch.imperialassault.services.models.PlayerClassModel;
-import com.robertkoch.imperialassault.services.models.PlayerModel;
+import com.robertkoch.imperialassault.services.models.*;
 import com.robertkoch.imperialassault.services.user.PlayerService;
 import com.robertkoch.imperialassault.web.model.AddXP;
 import com.robertkoch.imperialassault.web.utils.PagingBuilder;
@@ -53,8 +51,17 @@ public class PlayerController {
     @ModelAttribute("allPlayerClasses")
     public List<PlayerClassModel> populatePlayerClasses() { return configureService.allPlayerClasses(); }
 
+    @ModelAttribute("allMissionTypes")
+    public List<MissionType> populateMissionTypes() { return Arrays.asList(MissionType.values()); }
+
+    @ModelAttribute("allMissions")
+    public List<MissionModel> populatePlayerMissions() { return configureService.allMissions(); }
+
     @ModelAttribute("newPlayer")
     public PlayerModel getNewPlayer() { return playerService.getNewPlayerModel(); }
+
+    @ModelAttribute("newMission")
+    public PlayerMissionModel getNewMission() { return playerService.getNewPlayerMissionModel(); }
 
     @ModelAttribute("addXP")
     public AddXP getAddXP() { return new AddXP(); }
@@ -86,6 +93,7 @@ public class PlayerController {
         model.addAttribute("campaign", playerService.findPlayerCampaignByName(WebAppUtils.getPrincipal(), campaignName));
         model.addAttribute("campaignURL", String.format("/%s", campaignName));
         model.addAttribute("campaignPlayers", playerService.allPlayers(WebAppUtils.getPrincipal(), campaignName));
+        model.addAttribute("campaignMissions", playerService.allPlayerMissions(WebAppUtils.getPrincipal(), campaignName));
         return "player/campaignDetails";
     }
 
@@ -101,6 +109,14 @@ public class PlayerController {
         playerService.addPlayer(WebAppUtils.getPrincipal(), playerModel);
         model.addAttribute("campaignPlayers", playerService.allPlayers(WebAppUtils.getPrincipal(), campaignName));
         return "player/player/playerList :: campaignPlayerList";
+    }
+
+    @PostMapping("/{campaignName}/missions/add")
+    public String addCampaignMissionSubmit(@PathVariable String campaignName, @ModelAttribute PlayerMissionModel playerMissionModel, Model model) {
+        playerMissionModel.setPlayerCampaignName(campaignName);
+        playerService.addPlayerMission(WebAppUtils.getPrincipal(), playerMissionModel);
+        model.addAttribute("campaignMissions", playerService.allPlayerMissions(WebAppUtils.getPrincipal(), campaignName));
+        return "player/mission/missionList :: campaignMissionList";
     }
 
     @PostMapping("/{campaignName}/players/addXP")

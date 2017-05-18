@@ -4,23 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <th:block th:fragment="scripts">
-    <script>
-        $(document).submit(function(e){
-            var form = $(e.target);
-            if(form.data("custom-form") == "yes") {
-                e.preventDefault();
-                $.ajax({
-                    type: "POST",
-                    url: form.attr("action"),
-                    data: form.serialize(), // serializes the form's elements.
-                    success: function (data) {
-                        $(form.data("results-to")).html(data);
-                    }
-                });
-                $(form.data("modal-to-dismiss")).modal('hide');
-            }
-        });
-    </script>
     <th:block th:replace="player/player/playerView :: scripts"></th:block>
 </th:block>
 
@@ -30,40 +13,42 @@
             <h3 class="panel-title pull-left">Player List</h3>
             <div class="btn-group pull-right" role="group" aria-label="...">
                 <div class="dropdown">
-                    <button class="btn btn-success btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <button class="btn btn-success btn-xs dropdown-toggle" type="button" id="dropdownPlayers" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownPlayers">
                         <li><a role="button" data-toggle="modal" data-target="#ModalAddPlayer">Add Player</a></li>
                         <li><a role="button" data-toggle="modal" data-target="#ModalAddPlayerXP">Add XP</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="panel-body" style="overflow-x:scroll">
-            <div th:replace="player/player/playerList :: campaignPlayerList"></div>
-        </div>
+        <div th:replace="player/player/playerList :: campaignPlayerList"></div>
     </div>
     <div th:replace="player/player/playerList :: addCampaignPlayer"></div>
     <div th:replace="player/player/playerList :: addCampaignPlayerXP"></div>
 </div>
 
-<div id="playerList" th:fragment="campaignPlayerList">
-    <table class="table table-fixed">
-        <tr>
-            <td>Name</td>
-            <td>Player Type</td>
-            <td>Player Class</td>
-            <td>Available XP</td>
-        </tr>
-        <th:block th:each="player : ${campaignPlayers}">
+<div id="playerList" class="table-responsive" th:fragment="campaignPlayerList">
+    <table class="table table-bordered table-hover table-condensed">
+        <thead>
             <tr>
-                <td th:text="${player.name}"></td>
-                <td th:text="${player.playerType}"></td>
-                <td th:text="${player.playerClass}"></td>
-                <td th:text="${player.XP}"></td>
+                <th>Name</th>
+                <th>Player Type</th>
+                <th>Player Class</th>
+                <th>Available XP</th>
             </tr>
-        </th:block>
+        </thead>
+        <tbody>
+            <th:block th:each="player : ${campaignPlayers}">
+                <tr>
+                    <td th:text="${player.name}"></td>
+                    <td th:text="${player.playerType}"></td>
+                    <td th:text="${player.playerClass}"></td>
+                    <td th:text="${player.XP}"></td>
+                </tr>
+            </th:block>
+        </tbody>
     </table>
 </div>
 

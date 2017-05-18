@@ -40,6 +40,9 @@ public class UserCampaign extends IdentifiableEntity implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userCampaign")
     private List<UserPlayer> userPlayers = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userCampaign")
+    private List<UserMission> userMissions = new ArrayList<>();
+
     public UserCampaign() {
         this.dateStarted = new Date();
         this.credits = 0;
@@ -53,11 +56,11 @@ public class UserCampaign extends IdentifiableEntity implements Serializable {
         this.name = name;
     }
 
-    public String getAssociatedUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setAssociatedUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -115,6 +118,14 @@ public class UserCampaign extends IdentifiableEntity implements Serializable {
 
     public void setUserPlayers(List<UserPlayer> userPlayers) {
         this.userPlayers = userPlayers;
+    }
+
+    public List<UserMission> getUserMissions() {
+        return userMissions;
+    }
+
+    public void setUserMissions(List<UserMission> userMissions) {
+        this.userMissions = userMissions;
     }
 
     @Override

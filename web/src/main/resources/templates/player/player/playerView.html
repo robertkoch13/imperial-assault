@@ -39,11 +39,9 @@
              <option th:each="playerClass : ${allPlayerClasses}"
                      th:attr="data-classtype=${playerClass.classType}"
                      th:value="${playerClass.className}"
-                     th:text="${playerClass.className}">Wireframe</option>
+                     th:text="${playerClass}">Wireframe</option>
          </select>
      </div>
 
- </div>
- <div th:fragment="imageView">
  </div>
 </html>
